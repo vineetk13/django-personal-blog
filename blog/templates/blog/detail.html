@@ -1,36 +1,40 @@
 {% extends "base.html" %}
 
 {% block page_title %}
-    <h2>{{ post.title }}</h2>
+    <h2 class="fw-bold">{{ post.title }}</h2>
 {% endblock page_title %}
 
 {% block page_content %}
-    <small>
-        {{ post.created_on }} | Categories: 
-        {% for category in post.categories.all %}
-            <a href="{% url 'blog_category' category.name %}">{{ category.name }}</a>
-        {% endfor %}
-    </small>
-    <p>
-        {{ post.body | linebreaks }}
-    </p>
+    <div class="mb-5">
+        <small>
+            {{ post.created_on }} | Categories: 
+            {% for category in post.categories.all %}
+                <a href="{% url 'blog_category' category.name %}">{{ category.name }}</a>
+            {% endfor %}
+        </small>
+        <p>
+            {{ post.body | linebreaks }}
+        </p>
+    </div>
 
-    <h3>Comments</h3>
+    <h4 class="mb-3">Comments</h4>
     <form method="post">
         {% csrf_token %}
-        <div>
+        <div class="mb-3">
             {{ form.author }}
         </div>
-        <div class="comment-body-input">
+        <div class="mb-3">
             {{ form.body }}
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    {% for comment in comments %}
-        <div class="notice">
-            <span>{{ comment.body | linebreaks }}</span>
-            <small>On {{ comment.created_on.date }} by <b>{{ comment.author }}</b></small>
-        </div>
-    {% endfor %}
+    <div class="mt-3 row gx-1 gy-4">
+        {% for comment in comments %}
+            <div class="p-3 border bg-light">
+                <span>{{ comment.body | linebreaks }}</span>
+                <small>On {{ comment.created_on.date }} by <b>{{ comment.author }}</b></small>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock page_content %}
 
