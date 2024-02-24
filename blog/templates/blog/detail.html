@@ -18,16 +18,15 @@
     </div>
 
     <h4 class="mb-3">Comments</h4>
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            {{ form.author }}
-        </div>
-        <div class="mb-3">
-            {{ form.body }}
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.body }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    {% endif %}
     <div class="mt-3 row gx-1 gy-4">
         {% for comment in comments %}
             <div class="p-3 border bg-light">
